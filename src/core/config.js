@@ -1,5 +1,7 @@
 export const GAME_CONFIG = {
   // 基础资源路径
+  BASE_PATH: import.meta.env.BASE_URL,
+  // 基础资源路径
   BASE_PATH: '',
 
   // 游戏画布大小
