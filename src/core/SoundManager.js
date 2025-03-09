@@ -2,12 +2,28 @@ import { GAME_CONFIG } from './config'
 
 class SoundManager {
   constructor() {
+    this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
     this.sounds = {}
     this.enabled = true
     this.loaded = false
     this.loadRetries = {}
     this.maxRetries = 3
-    this.loadSounds()
+    this.bufferPool = new Map()
+    this.initTouchHandler()
+  }
+
+  initTouchHandler() {
+    const initAudio = async () => {
+      if (this.audioContext.state === 'suspended') {
+        await this.audioContext.resume();
+      }
+      // 首次交互后预加载所有音频
+      if (!this.loaded) {
+        this.loadSounds();
+      }
+      document.removeEventListener('touchstart', initAudio);
+    };
+    document.addEventListener('touchstart', initAudio, { once: true });
   }
 
   async loadSounds() {
@@ -66,16 +82,31 @@ class SoundManager {
     return audio
   }
 
-  play(soundName) {
-    if (!this.enabled || !this.loaded) return
-    
-    const sound = this.sounds[soundName]
-    if (sound) {
-      sound.currentTime = 0
-      sound.play().catch(error => {
-        console.warn('Sound play failed:', error)
-      })
+  async play(soundName) {
+    if (!this.enabled || !this.loaded) return;
+
+    try {
+      const source = this.audioContext.createBufferSource();
+      source.buffer = await this.getBuffer(soundName);
+      source.connect(this.audioContext.destination);
+      source.start(0);
+    } catch (error) {
+      console.warn('AudioBuffer playback failed:', error);
     }
+  }
+
+  async getBuffer(soundName) {
+    if (!this.bufferPool.has(soundName)) {
+      await this.cacheBuffer(soundName);
+    }
+    return this.bufferPool.get(soundName);
+  }
+
+  async cacheBuffer(soundName) {
+    const response = await fetch(GAME_CONFIG.SOUNDS[soundName]);
+    const arrayBuffer = await response.arrayBuffer();
+    const audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
+    this.bufferPool.set(soundName, audioBuffer);
   }
 
   toggle() {
