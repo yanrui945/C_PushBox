@@ -12,7 +12,7 @@ class SoundManager {
 
   async loadSounds() {
     try {
-      const loadPromises = Object.entries(GAME_CONFIG.SOUNDS).map(([key, path]) => this.loadSound(key, `${GAME_CONFIG.BASE_PATH}${path}`))
+      const loadPromises = Object.entries(GAME_CONFIG.SOUNDS).map(([key, path]) => this.loadSound(key, path))
       await Promise.all(loadPromises)
       this.loaded = true
       console.log('All sounds loaded successfully')
@@ -24,6 +24,13 @@ class SoundManager {
 
   async loadSound(key, path, retryCount = 0) {
     try {
+      console.log(`尝试加载音效: ${key} 路径: ${path}`);
+      
+      // 校验路径格式
+      if (!path || !path.startsWith('http') && !path.startsWith('/')) {
+        throw new Error(`无效的音效路径格式: ${path}`);
+      }
+
       const audio = new Audio(path)
       audio.preload = 'auto'
       
@@ -47,7 +54,7 @@ class SoundManager {
       this.sounds[key] = audio
       console.log(`Sound ${key} loaded successfully from ${path}`)
     } catch (error) {
-      console.warn(`Failed to load sound ${key} from ${path}:`, error)
+      console.error(`[音效加载失败] 名称:${key} 路径:${path} 原因:`, error.message)
       
       if (retryCount < this.maxRetries) {
         console.log(`Retrying to load sound ${key} (attempt ${retryCount + 1}/${this.maxRetries})`)

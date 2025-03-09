@@ -1,8 +1,6 @@
 export const GAME_CONFIG = {
   // 基础资源路径
   BASE_PATH: import.meta.env.BASE_URL,
-  // 基础资源路径
-  BASE_PATH: '',
 
   // 游戏画布大小
   CANVAS_WIDTH: 375,  // 适配大多数手机屏幕
@@ -14,6 +12,11 @@ export const GAME_CONFIG = {
   BOX_SIZE: 36,      // 箱子大小
   
   // 游戏元素类型
+  SOUNDS: {
+    MOVE: `${import.meta.env.BASE_URL}sounds/move.mp3`,
+    PUSH: `${import.meta.env.BASE_URL}sounds/push.mp3`,
+    COMPLETE: `${import.meta.env.BASE_URL}sounds/complete.mp3`
+  },
   TILE_TYPES: {
     EMPTY: 0,        // 空地
     WALL: 1,         // 墙
@@ -42,14 +45,7 @@ export const GAME_CONFIG = {
   },
 
   // 音效配置
-  SOUNDS: {
-    MOVE: './sounds/move.mp3',
-    PUSH: './sounds/push.mp3',
-    COMPLETE: './sounds/complete.mp3',
-    UNDO: './sounds/move.mp3',
-    ERROR: './sounds/move.mp3'
-  },
-
+  // 删除重复的SOUNDS配置块
   // 颜色主题
   COLORS: {
     PRIMARY: '#4169e1',    // 主色调
