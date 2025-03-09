@@ -29,14 +29,25 @@ class SoundManager {
       
       await new Promise((resolve, reject) => {
         audio.addEventListener('canplaythrough', () => resolve(), { once: true })
-        audio.addEventListener('error', (e) => reject(e), { once: true })
+        audio.addEventListener('error', (e) => {
+          console.error(`Error loading sound ${key} from path ${path}:`, e)
+          reject(e)
+        }, { once: true })
+        
+        // 设置超时，避免无限等待
+        const timeout = setTimeout(() => {
+          console.warn(`Sound ${key} loading timed out`)
+          reject(new Error('Loading timed out'))
+        }, 5000)
+        
+        audio.addEventListener('canplaythrough', () => clearTimeout(timeout), { once: true })
         audio.load()
       })
 
       this.sounds[key] = audio
-      console.log(`Sound ${key} loaded successfully`)
+      console.log(`Sound ${key} loaded successfully from ${path}`)
     } catch (error) {
-      console.warn(`Failed to load sound ${key}:`, error)
+      console.warn(`Failed to load sound ${key} from ${path}:`, error)
       
       if (retryCount < this.maxRetries) {
         console.log(`Retrying to load sound ${key} (attempt ${retryCount + 1}/${this.maxRetries})`)
@@ -56,7 +67,7 @@ class SoundManager {
   }
 
   play(soundName) {
-    if (!this.enabled) return
+    if (!this.enabled || !this.loaded) return
     
     const sound = this.sounds[soundName]
     if (sound) {
