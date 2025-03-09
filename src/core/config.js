@@ -38,11 +38,11 @@ export const GAME_CONFIG = {
 
   // 音效配置
   SOUNDS: {
-    MOVE: new URL('./sounds/move.mp3', import.meta.url).href,
-    PUSH: new URL('./sounds/push.mp3', import.meta.url).href,
-    COMPLETE: new URL('./sounds/complete.mp3', import.meta.url).href,
-    UNDO: new URL('./sounds/undo.mp3', import.meta.url).href,
-    ERROR: new URL('./sounds/error.mp3', import.meta.url).href
+    MOVE: '/C_PushBox/sounds/move.mp3',
+    PUSH: '/C_PushBox/sounds/push.mp3',
+    COMPLETE: '/C_PushBox/sounds/complete.mp3',
+    UNDO: '/C_PushBox/sounds/undo.mp3',
+    ERROR: '/C_PushBox/sounds/error.mp3'
   },
 
   // 颜色主题
