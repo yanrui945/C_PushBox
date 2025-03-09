@@ -1,0 +1,15 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 箱子主体 -->
+  <path d="M4 8L16 4L28 8L16 12L4 8Z" fill="#DAA520"/>
+  <path d="M4 8L16 12L16 28L4 24L4 8Z" fill="#8B4513"/>
+  <path d="M28 8L16 12L16 28L28 24L28 8Z" fill="#654321"/>
+  
+  <!-- 木纹装饰 -->
+  <path d="M8 10L14 11.5M8 14L14 15.5M8 18L14 19.5" stroke="#5C2E0A" stroke-width="1" stroke-linecap="round"/>
+  <path d="M24 10L18 11.5M24 14L18 15.5M24 18L18 19.5" stroke="#3E1E06" stroke-width="1" stroke-linecap="round"/>
+  
+  <!-- 边框装饰 -->
+  <path d="M4 8L16 4L28 8L16 12L4 8Z" stroke="#8B4513" stroke-width="1"/>
+  <path d="M4 8L16 12L16 28L4 24L4 8Z" stroke="#8B4513" stroke-width="1"/>
+  <path d="M28 8L16 12L16 28L28 24L28 8Z" stroke="#654321" stroke-width="1"/>
+</svg> 

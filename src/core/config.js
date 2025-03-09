@@ -38,11 +38,11 @@ export const GAME_CONFIG = {
 
   // 音效配置
   SOUNDS: {
-    MOVE: '/sounds/move.mp3',
-    PUSH: '/sounds/push.mp3',
-    COMPLETE: '/sounds/complete.mp3',
-    UNDO: '/sounds/undo.mp3',
-    ERROR: '/sounds/error.mp3'
+    MOVE: new URL('/sounds/move.mp3', import.meta.url).href,
+    PUSH: new URL('/sounds/push.mp3', import.meta.url).href,
+    COMPLETE: new URL('/sounds/complete.mp3', import.meta.url).href,
+    UNDO: new URL('/sounds/undo.mp3', import.meta.url).href,
+    ERROR: new URL('/sounds/error.mp3', import.meta.url).href
   },
 
   // 颜色主题
@@ -57,4 +57,4 @@ export const GAME_CONFIG = {
     SUCCESS: '#28a745',   // 成功色
     ERROR: '#dc3545'      // 错误色
   }
-} 
+}
