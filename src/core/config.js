@@ -1,4 +1,7 @@
 export const GAME_CONFIG = {
+  // 基础资源路径
+  BASE_PATH: '',
+
   // 游戏画布大小
   CANVAS_WIDTH: 375,  // 适配大多数手机屏幕
   CANVAS_HEIGHT: 667,

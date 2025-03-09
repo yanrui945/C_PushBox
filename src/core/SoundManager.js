@@ -12,7 +12,7 @@ class SoundManager {
 
   async loadSounds() {
     try {
-      const loadPromises = Object.entries(GAME_CONFIG.SOUNDS).map(([key, path]) => this.loadSound(key, path))
+      const loadPromises = Object.entries(GAME_CONFIG.SOUNDS).map(([key, path]) => this.loadSound(key, `${GAME_CONFIG.BASE_PATH}${path}`))
       await Promise.all(loadPromises)
       this.loaded = true
       console.log('All sounds loaded successfully')
